@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:recipe_app/core/network/api_urls.dart';
+import 'api_urls.dart';
 
 class DioFactory {
   static Dio createDio() {
