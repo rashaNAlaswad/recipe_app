@@ -1,15 +1,32 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../../../core/network/api_error_handler.dart';
+import '../../../../core/network/api_result.dart';
 import '../../../../core/network/api_urls.dart';
 import '../models/category_model.dart';
 
 part 'category_remote_data_source.g.dart';
 
 @RestApi()
-abstract class CategoryRemoteDataSource {
-  factory CategoryRemoteDataSource(Dio dio) = _CategoryRemoteDataSource;
+abstract class CategoryApiService {
+  factory CategoryApiService(Dio dio) = _CategoryApiService;
 
   @GET(ApiUrls.categories)
   Future<CategoriesResponse> getCategories();
+}
+
+class CategoryRemoteDataSource {
+  final CategoryApiService _apiService;
+  CategoryRemoteDataSource(this._apiService);
+
+  Future<ApiResult<CategoriesResponse>> getCategories() async {
+    try {
+      final response = await _apiService.getCategories();
+      return Success(response);
+    } catch (error) {
+      final errorMessage = ApiErrorHandler.handle(error).message;
+      return Failure(errorMessage ?? "Unknown error occurred");
+    }
+  }
 }
