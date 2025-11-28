@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+
 import '../../features/categories/screens/categories_screen.dart';
 import '../../features/search/screens/search_screen.dart';
 import 'routes.dart';
