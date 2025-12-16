@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../categories/screens/categories_screen.dart';
+import '../../categories/presentation/screens/categories_screen.dart';
 import '../../search/screens/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
