@@ -1,16 +1,11 @@
 import '../../domain/entities/category.dart';
 import '../models/category_model.dart';
 
-class CategoryMapper {
-  static Category toEntity(CategoryModel model) {
-    return Category(
-      id: model.categoryId,
-      name: model.categoryName,
-      imageUrl: model.categoryImage,
-    );
-  }
+extension CategoryModelExtension on CategoryModel {
+  Category toEntity() =>
+      Category(id: categoryId, name: categoryName, imageUrl: categoryImage);
+}
 
-  static List<Category> toEntityList(List<CategoryModel> models) {
-    return models.map((model) => toEntity(model)).toList();
-  }
+extension CategoryModelListExtension on List<CategoryModel> {
+  List<Category> toEntityList() => map((e) => e.toEntity()).toList();
 }

@@ -1,6 +1,6 @@
 import '../../../../core/network/api_result.dart';
-import '../../data/models/category_model.dart';
+import '../entities/category.dart';
 
 abstract class CategoryRepository {
-  Future<ApiResult<CategoriesResponse>> getCategories();
+  Future<ApiResult<List<Category>>> getCategories();
 }
