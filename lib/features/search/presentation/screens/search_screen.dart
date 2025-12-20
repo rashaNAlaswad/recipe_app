@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart' hide ErrorWidget;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +20,36 @@ class SearchScreen extends ConsumerStatefulWidget {
 
 class _SearchScreenState extends ConsumerState<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
-  
+  Timer? _debounceTimer;
+
+  void _onSearchChanged(String query) {
+    _debounceTimer?.cancel();
+
+    if (query.isEmpty) {
+      ref.read(searchProvider.notifier).search('');
+      return;
+    }
+
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      if (mounted) {
+        ref.read(searchProvider.notifier).search(query);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialQuery != null && widget.initialQuery!.isNotEmpty) {
+      _searchController.text = widget.initialQuery!;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          ref.read(searchProvider.notifier).search(widget.initialQuery!);
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final searchAsync = ref.watch(searchProvider);
@@ -29,10 +60,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
           children: [
             SearchBar(
               controller: _searchController,
-              onChanged: (query) {
-                ref.read(searchProvider.notifier).search(query);
-              },
+              onChanged: _onSearchChanged,
               onClear: () {
+                _debounceTimer?.cancel();
                 _searchController.clear();
                 ref.read(searchProvider.notifier).search('');
               },
@@ -61,6 +91,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
   @override
   void dispose() {
+    _debounceTimer?.cancel();
     _searchController.dispose();
     super.dispose();
   }
