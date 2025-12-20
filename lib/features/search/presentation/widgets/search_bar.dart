@@ -25,22 +25,30 @@ class _SearchBarState extends State<SearchBar> {
         color: CupertinoColors.systemGrey6,
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: CupertinoTextField(
-        controller: widget.controller,
-        placeholder: 'Search meals...',
-        padding: const EdgeInsets.all(12.0),
-        decoration: const BoxDecoration(),
-        prefix: const Padding(
-          padding: EdgeInsets.only(left: 12.0),
-          child: Icon(CupertinoIcons.search, size: 20),
-        ),
-        suffix: widget.controller.text.isNotEmpty
-            ? CupertinoButton(
-                onPressed: widget.onClear,
-                child: const Icon(CupertinoIcons.clear_circled_solid, size: 20),
-              )
-            : null,
-        onChanged: widget.onChanged,
+      child: ValueListenableBuilder<TextEditingValue>(
+        valueListenable: widget.controller,
+        builder: (context, value, child) {
+          return CupertinoTextField(
+            controller: widget.controller,
+            placeholder: 'Search meals...',
+            padding: const EdgeInsets.all(12.0),
+            decoration: const BoxDecoration(),
+            prefix: const Padding(
+              padding: EdgeInsets.only(left: 12.0),
+              child: Icon(CupertinoIcons.search, size: 20),
+            ),
+            suffix: value.text.isNotEmpty
+                ? CupertinoButton(
+                    onPressed: widget.onClear,
+                    child: const Icon(
+                      CupertinoIcons.clear_circled_solid,
+                      size: 20,
+                    ),
+                  )
+                : null,
+            onChanged: widget.onChanged,
+          );
+        },
       ),
     );
   }
