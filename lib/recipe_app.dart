@@ -1,16 +1,19 @@
 import 'package:flutter/cupertino.dart';
 
+import 'core/router/app_router.dart';
 import 'features/home/screens/home_screen.dart';
 
 class RecipeApp extends StatelessWidget {
-  const RecipeApp({super.key});
+  final AppRouter appRouter;
+  const RecipeApp({super.key, required this.appRouter});
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    return CupertinoApp(
       title: 'Recipe App',
-      home: HomeScreen(),
       debugShowCheckedModeBanner: false,
+      home: const HomeScreen(),
+      onGenerateRoute: appRouter.onGenerateRoute,
     );
   }
 }
