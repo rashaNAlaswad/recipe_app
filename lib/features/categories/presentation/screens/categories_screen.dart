@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' hide ErrorWidget;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/widgets/error.dart';
+import '../../../../core/widgets/loading.dart';
 import '../../domain/entities/category.dart';
 import '../providers/category_providers.dart';
 import '../widgets/category_item.dart';
@@ -22,21 +24,17 @@ class CategoriesScreen extends ConsumerWidget {
             }
             return _CategoriesListWidget(ref: ref, categories: categories);
           },
-          error: (error, stack) =>
-              _CategoriesErrorWidget(error: error, ref: ref),
-          loading: () => const _LoadingState(),
+          error: (error, stack) => ErrorWidget(
+            error: error,
+            ref: ref,
+            onRetry: () {
+              ref.read(categoriesProvider.notifier).refresh();
+            },
+          ),
+          loading: () => const LoadingWidget(),
         ),
       ),
     );
-  }
-}
-
-class _LoadingState extends StatelessWidget {
-  const _LoadingState();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: CupertinoActivityIndicator());
   }
 }
 
@@ -81,34 +79,6 @@ class _CategoriesListWidget extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _CategoriesErrorWidget extends StatelessWidget {
-  const _CategoriesErrorWidget({required this.error, required this.ref});
-
-  final Object error;
-  final WidgetRef ref;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          children: [
-            Text(error.toString()),
-            const SizedBox(height: 16),
-            CupertinoButton.filled(
-              onPressed: () {
-                ref.read(categoriesProvider.notifier).refresh();
-              },
-              child: const Text('Retry'),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
