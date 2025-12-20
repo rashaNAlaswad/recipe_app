@@ -4,4 +4,6 @@ class ApiUrls {
 
   // Endpoints
   static const String categories = '/categories.php';
+  static const String search = '/search.php';
+  static const String mealDetail = '/lookup.php';
 }
