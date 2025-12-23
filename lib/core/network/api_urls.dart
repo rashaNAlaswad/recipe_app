@@ -6,4 +6,5 @@ class ApiUrls {
   static const String categories = '/categories.php';
   static const String search = '/search.php';
   static const String mealDetail = '/lookup.php';
+  static const String filter = '/filter.php';
 }
