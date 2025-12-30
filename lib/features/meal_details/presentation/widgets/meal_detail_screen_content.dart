@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/app_theme.dart';
+import '../../../../core/theme/theme_providers.dart';
 import '../../domain/entities/meal_detail.dart';
 import 'meal_ingredient_item.dart';
 
-class MealDetailScreenContent extends StatelessWidget {
+class MealDetailScreenContent extends ConsumerWidget {
   const MealDetailScreenContent({
     super.key,
     required this.mealId,
@@ -18,7 +20,8 @@ class MealDetailScreenContent extends StatelessWidget {
   final MealDetail mealDetail;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = ref.watch(isDarkModeProvider);
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
@@ -55,7 +58,9 @@ class MealDetailScreenContent extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: CupertinoColors.systemGrey5,
+                            color: isDarkMode
+                                ? AppTheme.darkCardBackground
+                                : AppTheme.lightCardBackground,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
@@ -70,7 +75,9 @@ class MealDetailScreenContent extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: CupertinoColors.systemGrey5,
+                            color: isDarkMode
+                                ? AppTheme.darkCardBackground
+                                : AppTheme.lightCardBackground,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(

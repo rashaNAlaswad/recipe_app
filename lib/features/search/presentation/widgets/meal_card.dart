@@ -1,17 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/helper/extensions.dart';
 import '../../../../core/router/routes.dart';
+import '../../../../core/theme/app_theme.dart';
+import '../../../../core/theme/theme_providers.dart';
 import '../../domain/entities/meal.dart';
 
-class MealCard extends StatelessWidget {
+class MealCard extends ConsumerWidget {
   final Meal meal;
 
   const MealCard({super.key, required this.meal});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = ref.watch(isDarkModeProvider);
     return GestureDetector(
       onTap: () {
         context.pushNamed(Routes.mealDetail, arguments: meal.id);
@@ -19,7 +23,9 @@ class MealCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         decoration: BoxDecoration(
-          color: CupertinoColors.systemGrey6,
+          color: isDarkMode
+              ? AppTheme.darkCardBackground
+              : AppTheme.lightCardBackground,
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Row(

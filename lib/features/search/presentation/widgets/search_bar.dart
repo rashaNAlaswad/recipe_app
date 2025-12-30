@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SearchBar extends StatefulWidget {
+import '../../../../core/theme/app_theme.dart';
+import '../../../../core/theme/theme_providers.dart';
+
+class SearchBar extends ConsumerStatefulWidget {
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
   final VoidCallback onClear;
@@ -13,16 +17,19 @@ class SearchBar extends StatefulWidget {
   });
 
   @override
-  State<SearchBar> createState() => _SearchBarState();
+  ConsumerState<SearchBar> createState() => _SearchBarState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _SearchBarState extends ConsumerState<SearchBar> {
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = ref.watch(isDarkModeProvider);
     return Container(
       margin: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemGrey6,
+        color: isDarkMode
+            ? AppTheme.darkCardBackground
+            : CupertinoColors.systemGrey6,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: ValueListenableBuilder<TextEditingValue>(
