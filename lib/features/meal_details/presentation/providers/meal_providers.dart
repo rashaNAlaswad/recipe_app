@@ -9,7 +9,7 @@ part 'meal_providers.g.dart';
 class MealDetailNotifier extends _$MealDetailNotifier {
   @override
   Future<MealDetail> build(String mealId) async {
-    final result = ref.watch(mealRepositoryProvider).getMealDetail(mealId);
+    final result = ref.read(mealRepositoryProvider).getMealDetail(mealId);
     return result.then(_handleApiResult);
   }
 

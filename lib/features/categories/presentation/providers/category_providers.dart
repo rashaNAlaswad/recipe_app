@@ -36,7 +36,7 @@ class MealsByCategoryNotifier extends _$MealsByCategoryNotifier {
   @override
   Future<List<Meal>> build(String category) {
     final result = ref
-        .watch(categoryRepositoryProvider)
+        .read(categoryRepositoryProvider)
         .getMealsByCategory(category);
     return result.then(_handleApiResult);
   }
