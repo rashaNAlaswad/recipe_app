@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart' hide ErrorWidget;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/theme_switch_widget.dart';
 import '../../../../core/widgets/error.dart';
 import '../../../../core/widgets/loading.dart';
 import '../../domain/entities/category.dart';
@@ -15,7 +16,10 @@ class CategoriesScreen extends ConsumerWidget {
     final categoriesAsync = ref.watch(categoriesProvider);
 
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(middle: Text('Categories')),
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Categories'),
+        trailing: ThemeSwitchWidget(),
+      ),
       child: SafeArea(
         child: categoriesAsync.when(
           data: (categories) {

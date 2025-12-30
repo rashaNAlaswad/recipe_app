@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart' hide ErrorWidget;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/theme_switch_widget.dart';
 import '../../../../core/widgets/error.dart';
 import '../../../../core/widgets/loading.dart';
 import '../providers/search_providers.dart';
@@ -54,7 +55,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   Widget build(BuildContext context) {
     final searchAsync = ref.watch(searchProvider);
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(middle: Text('Search Meals')),
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Search Meals'),
+        trailing: ThemeSwitchWidget(),
+      ),
       child: SafeArea(
         child: Column(
           children: [
