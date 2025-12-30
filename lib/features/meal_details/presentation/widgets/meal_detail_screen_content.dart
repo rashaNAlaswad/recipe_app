@@ -98,7 +98,10 @@ class MealDetailScreenContent extends ConsumerWidget {
                     const SizedBox(height: 12),
                     ...mealDetail.ingredients.map(
                       (ingredient) =>
-                          MealIngredientItem(ingredient: ingredient),
+                          ingredient.name.isNotEmpty &&
+                              ingredient.measure.isNotEmpty
+                          ? MealIngredientItem(ingredient: ingredient)
+                          : const SizedBox.shrink(),
                     ),
                     const SizedBox(height: 24),
                     const Text(
