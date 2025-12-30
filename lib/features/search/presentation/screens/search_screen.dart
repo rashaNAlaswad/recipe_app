@@ -69,10 +69,21 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
             ),
             Expanded(
               child: searchAsync.when(
-                data: (meals) => ListView.builder(
-                  itemCount: meals.length,
-                  itemBuilder: (context, index) => MealCard(meal: meals[index]),
-                ),
+                data: (meals) {
+                  if (meals.isEmpty && _searchController.text.isEmpty) {
+                    return const Center(
+                      child: Text('Start typing to search for meals'),
+                    );
+                  }
+                  if (meals.isEmpty) {
+                    return const Center(child: Text('No meals found'));
+                  }
+                  return ListView.builder(
+                    itemCount: meals.length,
+                    itemBuilder: (context, index) =>
+                        MealCard(meal: meals[index]),
+                  );
+                },
                 error: (error, stack) => ErrorWidget(
                   error: error,
                   ref: ref,
