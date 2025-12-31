@@ -12,13 +12,6 @@ class MealDetailNotifier extends _$MealDetailNotifier {
     final result = ref.read(mealRepositoryProvider).getMealDetail(mealId);
     return result.then(_handleApiResult);
   }
-
-  Future<void> refresh() async {
-    final mealId = this.mealId;
-    state = const AsyncValue.loading();
-    final result = await ref.read(mealRepositoryProvider).getMealDetail(mealId);
-    state = await AsyncValue.guard(() async => _handleApiResult(result));
-  }
 }
 
 MealDetail _handleApiResult(ApiResult<MealDetail> apiResult) {

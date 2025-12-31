@@ -30,7 +30,7 @@ class MealDetailScreen extends ConsumerWidget {
             error: error,
             ref: ref,
             onRetry: () {
-              ref.read(mealDetailProvider(mealId).notifier).refresh();
+              ref.invalidate(mealDetailProvider(mealId));
             },
           ),
           loading: () => const LoadingWidget(),

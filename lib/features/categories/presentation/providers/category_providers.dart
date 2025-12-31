@@ -16,11 +16,7 @@ class CategoriesNotifier extends _$CategoriesNotifier {
   }
 
   Future<void> refresh() async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      final result = await ref.read(categoryRepositoryProvider).getCategories();
-      return _handleApiResult(result);
-    });
+    ref.invalidateSelf();
   }
 
   List<Category> _handleApiResult(ApiResult<List<Category>> apiResult) {
