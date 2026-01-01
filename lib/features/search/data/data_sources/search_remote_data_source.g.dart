@@ -20,9 +20,13 @@ class _SearchApiService implements SearchApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<MealsResponse> searchMeals(String query) async {
+  Future<MealsResponse> searchMeals(
+    String query,
+    CancelToken? cancelToken,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r's': query};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<MealsResponse>(
@@ -32,6 +36,7 @@ class _SearchApiService implements SearchApiService {
             '/search.php',
             queryParameters: queryParameters,
             data: _data,
+            cancelToken: cancelToken,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );

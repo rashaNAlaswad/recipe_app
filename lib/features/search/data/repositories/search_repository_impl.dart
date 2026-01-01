@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../../../core/network/api_result.dart';
 import '../../domain/entities/meal.dart';
 import '../../domain/repositories/search_repository.dart';
@@ -10,8 +12,14 @@ class SearchRepositoryImpl implements SearchRepository {
   SearchRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<ApiResult<List<Meal>>> searchMeals(String query) async {
-    final result = await remoteDataSource.searchMeals(query);
+  Future<ApiResult<List<Meal>>> searchMeals(
+    String query, {
+    CancelToken? cancelToken,
+  }) async {
+    final result = await remoteDataSource.searchMeals(
+      query,
+      cancelToken: cancelToken,
+    );
     return switch (result) {
       Success(data: final data) => Success(data.toEntityList()),
       Failure(error: final error) => Failure(error),

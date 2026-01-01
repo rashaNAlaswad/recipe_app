@@ -13,7 +13,10 @@ abstract class SearchApiService {
   factory SearchApiService(Dio dio) = _SearchApiService;
 
   @GET(ApiUrls.search)
-  Future<MealsResponse> searchMeals(@Query('s') String query);
+  Future<MealsResponse> searchMeals(
+    @Query('s') String query,
+    @CancelRequest() CancelToken? cancelToken,
+  );
 }
 
 class SearchRemoteDataSource {
@@ -21,9 +24,12 @@ class SearchRemoteDataSource {
 
   SearchRemoteDataSource(this._apiService);
 
-  Future<ApiResult<MealsResponse>> searchMeals(String query) async {
+  Future<ApiResult<MealsResponse>> searchMeals(
+    String query, {
+    CancelToken? cancelToken,
+  }) async {
     try {
-      final response = await _apiService.searchMeals(query);
+      final response = await _apiService.searchMeals(query, cancelToken);
       return Success(response);
     } catch (error) {
       final errorMessage = ApiErrorHandler.handle(error).message;
