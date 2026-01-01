@@ -8,6 +8,12 @@ A modern Flutter application for browsing and discovering recipes from [TheMealD
 - 🔍 **Search Meals**: Search for recipes by name
 - 📱 **Meal Details**: View detailed recipe information including ingredients and step-by-step instructions
 
+## Video
+
+https://github.com/user-attachments/assets/6437e894-45cf-4fd0-986c-f4c30189579f
+
+
+
 ## Getting Started
 
 ### Prerequisites
